@@ -16,6 +16,16 @@ export const userDal = {
             throw error
         }
     },
+    getUserByEmail: async (email,isFromLogin = false) =>{
+        try {
+            if(isFromLogin)
+                return await User.findOne({email:email}).select('+password')
+            
+            return await User.findOne({email:email})
+        } catch (error) {
+            throw error
+        }
+    },
     updateUser: async (id, userData) => {
 
         try {

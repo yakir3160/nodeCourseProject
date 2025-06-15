@@ -14,7 +14,7 @@ app.use(express.json())
 
 
 //main Route
-app.use('/',routes)
+app.use('/api',routes)
 
 
 export default app

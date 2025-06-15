@@ -19,11 +19,11 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            return res.status(400).send('Username and password are required');
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).send('Email and password are required');
         }
-        const response = await authService.login(username, password);
+        const response = await authService.login(email, password);
         res.status(200).json(response);
     } catch (error) {
         console.error('Error during login:', error);
