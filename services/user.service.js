@@ -45,7 +45,7 @@ export const userServices = {
 
             let weatherForUser = {}
             try {
-                weatherForUser = await weatherService.getWeatherByCity('il', userObject.city);
+                weatherForUser = await weatherService.getWeatherByCity(userObject.city);
             }
             catch (error) {
                 console.error(`Error fetching weather for user with ID ${id}:`, error);

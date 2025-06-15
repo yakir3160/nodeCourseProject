@@ -6,7 +6,7 @@ import { weatherDal } from "../dal/weather.dal.js";
 
 
 export const weatherService = {
-    getWeatherByCity: async (country, city) => {
+    getWeatherByCity: async (city,country) => {
         try {
             console.log(`Fetching weather data for ${city}, ${country}`);
             const data = await weatherDal.getWeatherByCity(country, city);
