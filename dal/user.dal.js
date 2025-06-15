@@ -26,13 +26,20 @@ export const userDal = {
             throw error
         }
     },
-    updateUser: async (id, userData) => {
+    updateUser: async (id, dataToUpdate) => {
 
         try {
-            return await User.findByIdAndUpdate(id, userData, { new: true });
+            return await User.findByIdAndUpdate(id, dataToUpdate, { new: true });
         } catch (error) {
             throw error
         }
 
+    },
+    deleteUser:  async (id) => {
+        try {
+            return await User.findByIdAndDelete(id)
+        } catch (error) {
+            throw error
+        }
     }
 }
