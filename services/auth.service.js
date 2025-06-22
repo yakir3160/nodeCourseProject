@@ -2,16 +2,20 @@ import { comparePassword, hashPassword } from "../utils/hashPassword.js";
 import { authDal } from "../dal/auth.dal.js";
 import { userDal } from "../dal/user.dal.js";
 import { createToken } from "../utils/token.js";
+import {createLogger} from '../utils/logger.js'
 
-
+const logger = createLogger('AUTH_SERVICE')
 
 export const authService = {
     async register(user) {
         try {
-            console.log("user password:", user.password);
+            logger.info('Starting registration process');
+            logger.debug("user password:", user.password);
             if (user.password.length < 6) {
                 throw new Error('Password must be at least 6 characters long');
             }
+           
+
             // Create user with hashed password
             const userData = {
                 ...user,
@@ -20,6 +24,8 @@ export const authService = {
 
             // Register the user using the data access layer (DAL)
             const response = await authDal.register(userData);
+            logger.info('User registered successfully:', response.email);
+            logger.debug('User data:', response);
 
             // cast the response to a plain object and remove the password field
             const userWithoutPassword = response.toObject();
@@ -27,10 +33,11 @@ export const authService = {
 
             //Create a token for the user
             const token = await createToken({ id: userWithoutPassword._id }, { expiresIn: '1w' });
+            logger.info('Token created successfully for user:', userWithoutPassword.email); 
 
             return { success: true, message: 'User registered successfully', user: userWithoutPassword, token: token };
         } catch (error) {
-            console.error('Error during registration:', error);
+            logger.error('Error during registration:', error);
             throw error;
 
         }
